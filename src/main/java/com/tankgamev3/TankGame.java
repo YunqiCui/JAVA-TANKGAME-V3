@@ -34,5 +34,4 @@ public class TankGame extends JFrame {
         this.addKeyListener(mtk);
     }
 
-
 }

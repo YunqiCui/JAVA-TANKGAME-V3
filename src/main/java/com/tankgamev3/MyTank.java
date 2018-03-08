@@ -37,8 +37,11 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
             et.setType(0);
             Thread t = new Thread(et);
             t.start();
+            Bullet eb = new Bullet(et.x,et.y,et.direct);
+            et.ebv.add(eb);
+            Thread t2 = new Thread(eb);
+            t2.start();
             etv.add(et);
-
         }
 
         x = pt.getX();
@@ -62,7 +65,7 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
         for (int i = 0; i < this.pt.bv.size(); i++) {
             Bullet mb = this.pt.bv.get(i);
 
-            //Draw Player Player Bullet
+            //Draw Player Bullet
             if (mb != null && mb.isAlive) {
                 g.draw3DRect(mb.x, mb.y, 1, 1, false);
             } else if (!mb.isAlive) {
@@ -76,6 +79,17 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
             EnemyTank et = etv.get(i);
             if(et.isLive){
                 this.drawTank(et.getX(), et.getY(), g, et.getDirect(), et.getType());
+                for (int j = 0; j < et.bv.size(); j++) {
+                    Bullet eb = et.bv.get(j);
+
+                    //Draw Enemy Bullet
+                    if (eb != null && eb.isAlive) {
+                        g.draw3DRect(eb.x, eb.y, 1, 1, false);
+                    } else if (!eb.isAlive) {
+                        et.bv.remove(eb);
+                    }
+                }
+
             }
         }
 
@@ -259,7 +273,7 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
                 e.printStackTrace();
             }
 
-            //判断是否几种坦克，判断那一个坦克，击中哪一个坦克
+            //判断是否击中坦克，判断那一个坦克，击中哪一个坦克
             for (int i = 0; i < this.pt.bv.size(); i++) {
 
                 Bullet b = pt.bv.get(i);

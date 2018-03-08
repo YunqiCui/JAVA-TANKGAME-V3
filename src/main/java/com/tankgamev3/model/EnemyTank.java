@@ -1,8 +1,13 @@
 package com.tankgamev3.model;
 
+import com.tankgamev3.entity.Bullet;
 import com.tankgamev3.entity.Tank;
 
+import java.util.Vector;
+
 public class EnemyTank extends Tank implements Runnable{
+
+    public Vector<Bullet> ebv = new Vector<Bullet>();
 
     public EnemyTank(int x, int y){
         super(x,y);
@@ -82,6 +87,12 @@ public class EnemyTank extends Tank implements Runnable{
                     }
 
             this.direct = (int)(Math.random()*4);
+
+            if(isLive){
+                if(ebv.size()<5){
+                    this.shot();
+                }
+            }
 
             if(!this.isLive){
                 break;

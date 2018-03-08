@@ -13,6 +13,14 @@ public class Bullet implements Runnable{
         this.y= y;
         this.direct = direct;
     }
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
 
     public void run() {
 

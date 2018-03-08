@@ -5,9 +5,14 @@ package com.tankgamev3.model;/*
  */
 
 
+import com.tankgamev3.entity.Bullet;
 import com.tankgamev3.entity.Tank;
 
+import java.util.Vector;
+
 public class PlayerTank extends Tank {
+
+
 
     //up:0 right:1 down:2 left:3
 
