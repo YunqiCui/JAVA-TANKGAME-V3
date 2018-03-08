@@ -1,0 +1,11 @@
+
+Tankgame v3 Function
+1.Enemy Tank can shot.
+2.When hit target, desappear Enemy Tank.
+3.Make Enemy Tank move randomly.
+4.Control both Player Tank and Enemy Tank move in the boundry.
+
+
+
+***
+1.Toolkit.getDefaultToolkit.getImage("/Users/cuiyunqi/Desktop/HSP/TANKGAMEV3/src/main/java/com/tankgamev3/images/bomb_1.gif");
