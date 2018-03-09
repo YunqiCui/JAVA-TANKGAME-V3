@@ -16,8 +16,6 @@ public class Tank{
     public int direct;
     public int speed;
     public boolean isLive;
-    public Vector<Bullet> bv = new Vector<Bullet>();
-    public Bullet b = null;
 
     public Tank(int x,int y){
         this.x = x;
@@ -60,36 +58,8 @@ public class Tank{
         return speed;
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
-
-    public void shot(){
-
-        switch (this.direct){
-            case 0:
-                b = new Bullet(x+10,y,0);
-                bv.add(b);
-                break;
-
-            case 1:
-                b = new Bullet(x+30,y+10,1);
-                bv.add(b);
-                break;
-
-            case 2:
-                b = new Bullet(x+10,y+30,2);
-                bv.add(b);
-                break;
-
-            case 3:
-                b = new Bullet(x,y+10,3);
-                bv.add(b);
-                break;
-                }
-        Thread t = new Thread(b);
-        t.start();
-    }
-
 
 }

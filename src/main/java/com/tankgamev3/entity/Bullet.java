@@ -48,7 +48,7 @@ public class Bullet implements Runnable{
                     x-=speed;
                     break;
             }
-            System.out.println("Bullet X = " +x + " Y = " +y);
+//            System.out.println("Bullet X = " +x + " Y = " +y);
             //when THE Bullet need to be killed
             if(x<0 || x > 400 || y < 0 || y> 300){
                 isAlive = false;

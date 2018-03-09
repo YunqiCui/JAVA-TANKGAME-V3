@@ -7,9 +7,9 @@ package com.tankgamev3;/*
 
 import com.tankgamev3.entity.Bullet;
 import com.tankgamev3.entity.Bomb;
+import com.tankgamev3.entity.Tank;
 import com.tankgamev3.model.EnemyTank;
 import com.tankgamev3.model.PlayerTank;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -25,23 +25,25 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
     public int x = 0;
     public int y = 0;
     Image im1,im2,im3;
+    Thread t,t2;
 
 
     public MyTank() {
-        pt = new PlayerTank(100, 100);
+        pt = new PlayerTank(100, 250);
         pt.isLive = true;
 
         for (int i = 0; i < enemySize; i++) {
             EnemyTank et = new EnemyTank((i + 1) * 50, 0);
             et.isLive = true;
             et.setType(0);
-            Thread t = new Thread(et);
-            t.start();
+            etv.add(et);
             Bullet eb = new Bullet(et.x,et.y,et.direct);
             et.ebv.add(eb);
-            Thread t2 = new Thread(eb);
+            t = new Thread(et);
+            t.start();
+            t2 = new Thread(eb);
             t2.start();
-            etv.add(et);
+
         }
 
         x = pt.getX();
@@ -58,18 +60,20 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
         super.paint(g);
         this.drawGameField(g);
         //draw Player Tank
-        this.drawTank(pt.getX(), pt.getY(), g, pt.getDirect(), pt.getType());
+        if(pt.isLive){
+            this.drawTank(pt.getX(), pt.getY(), g, pt.getDirect(), pt.getType());
+        }
 
 
         //traverse every bullet from the vector
-        for (int i = 0; i < this.pt.bv.size(); i++) {
-            Bullet mb = this.pt.bv.get(i);
+        for (int i = 0; i < this.pt.pbv.size(); i++) {
+            Bullet mb = this.pt.pbv.get(i);
 
             //Draw Player Bullet
             if (mb != null && mb.isAlive) {
                 g.draw3DRect(mb.x, mb.y, 1, 1, false);
             } else if (!mb.isAlive) {
-                pt.bv.remove(mb);
+                pt.pbv.remove(mb);
             }
 
         }
@@ -79,14 +83,16 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
             EnemyTank et = etv.get(i);
             if(et.isLive){
                 this.drawTank(et.getX(), et.getY(), g, et.getDirect(), et.getType());
-                for (int j = 0; j < et.bv.size(); j++) {
-                    Bullet eb = et.bv.get(j);
+                for (int j = 0; j < et.ebv.size(); j++) {
+                    Bullet eb = et.ebv.get(j);
 
                     //Draw Enemy Bullet
                     if (eb != null && eb.isAlive) {
                         g.draw3DRect(eb.x, eb.y, 1, 1, false);
                     } else if (!eb.isAlive) {
-                        et.bv.remove(eb);
+                        et.ebv.remove(eb);
+                    }else{
+                        break;
                     }
                 }
 
@@ -192,7 +198,7 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
 
     //Move Tank by Keyboard
     public void keyPressed(KeyEvent e) {
-
+        if(pt.isLive){
 
         if (e.getKeyCode() == KeyEvent.VK_UP
                 ) {
@@ -220,47 +226,106 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 
-            if (pt.bv.size() <= 4) {
-                pt.shot();
+            if (pt.pbv.size() <= 4) {
+                pt.shotEnemy();
             }
 
         }
         this.repaint();
+        }
     }
 
     public void keyReleased(KeyEvent e) {
 
     }
+    public void destroyPlayer(){
 
-    public void hitTank(Bullet b, EnemyTank et) {
+        for (int i = 0; i < etv.size(); i++) {
+            EnemyTank et = etv.get(i);
+            if(et.isLive){
+                for (int j = 0; j < et.ebv.size(); j++) {
+                    Bullet b = et.ebv.get(j);
+                    if(b.isAlive){
+                        hitTank(b,pt);
+                    }
+                }
+            }
+        }
 
-        switch (et.direct) {
+
+    }
+
+    public void destroyEnemy(){
+        //判断是否击中坦克，判断那一个坦克，击中哪一个坦克
+        for (int i = 0; i < this.pt.pbv.size(); i++) {
+
+            Bullet b = pt.pbv.get(i);
+            //
+            if (b.isAlive) {
+                for (int j = 0; j < etv.size(); j++) {
+                    EnemyTank et = etv.get(j);
+                    if (et.isLive) {
+                        this.hitTank(b, et);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public void hitTank(Bullet b, Tank tk) {
+
+        switch (tk.direct) {
 
             //Eenemy Tank is facing up or down
             case 0:
             case 2:
-                if (b.x > et.x && b.x < et.x + 20 && b.y > et.y && b.y < et.y + 30) {
+                if (b.x > tk.x && b.x < tk.x + 20 && b.y > tk.y && b.y < tk.y + 30) {
                     //hit
                     b.isAlive = false;
-                    et.isLive = false;
-                    Bomb bomb = new Bomb(et.x,et.y);
+                    tk.isLive = false;
+                    Bomb bomb = new Bomb(tk.x,tk.y);
                     bbv.add(bomb);
-
                 }
 
             case 1:
             case 3:
-                if (b.x > et.x && b.x < et.x + 30 && b.y > et.y && b.y < et.y + 20) {
+                if (b.x > tk.x && b.x < tk.x + 30 && b.y > tk.y && b.y < tk.y + 20) {
                     //hit
                     b.isAlive = false;
-                    et.isLive = false;
-                    Bomb bomb = new Bomb(et.x,et.y);
+                    tk.isLive = false;
+                    Bomb bomb = new Bomb(tk.x,tk.y);
                     bbv.add(bomb);
                 }
-
-
         }
 
+    }
+    public void playerWin(){
+            int etn = etv.size();
+            for (int i = 0; i < etv.size() ; i++) {
+            EnemyTank et = etv.get(i);
+            if(!et.isLive){
+                etn--;
+                if(etn==0){
+                    t.interrupt();
+                    t2.interrupt();
+                    JOptionPane.showMessageDialog(this, "Congratulations, You Win!");
+                    System.exit(0);
+                }
+            }else{
+                break;
+            }
+            }
+
+
+    }
+
+    public void playerLose(){
+        t.interrupt();
+        t2.interrupt();
+        JOptionPane.showMessageDialog(this, "Game Over!");
+        System.exit(0);
     }
 
     public void run() {
@@ -272,22 +337,15 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            //判断是否击中坦克，判断那一个坦克，击中哪一个坦克
-            for (int i = 0; i < this.pt.bv.size(); i++) {
-
-                Bullet b = pt.bv.get(i);
-                //
-                if (b.isAlive) {
-                    for (int j = 0; j < etv.size(); j++) {
-                        EnemyTank et = etv.get(j);
-                        if (et.isLive) {
-                            this.hitTank(b, et);
-                        }
-                    }
-                }
-            }
+            this.destroyEnemy();
+            this.destroyPlayer();
             this.repaint();
+            if(!pt.isLive){
+                this.playerLose();
+                break;
+            }else {
+                playerWin();
+            }
         }
 
     }

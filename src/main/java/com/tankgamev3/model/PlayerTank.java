@@ -13,7 +13,8 @@ import java.util.Vector;
 public class PlayerTank extends Tank {
 
 
-
+    public Vector<Bullet> pbv = new Vector<Bullet>();
+    public Bullet b=null;
     //up:0 right:1 down:2 left:3
 
     public PlayerTank(int x, int y) {
@@ -47,5 +48,33 @@ public class PlayerTank extends Tank {
         this.x-=this.getSpeed();
         }
     }
+    public void shotEnemy(){
+
+        switch (this.direct){
+            case 0:
+                b = new Bullet(x+10,y,0);
+                pbv.add(b);
+                break;
+
+            case 1:
+                b = new Bullet(x+30,y+10,1);
+                pbv.add(b);
+                break;
+
+            case 2:
+                b = new Bullet(x+10,y+30,2);
+                pbv.add(b);
+                break;
+
+            case 3:
+                b = new Bullet(x,y+10,3);
+                pbv.add(b);
+                break;
+        }
+        Thread t = new Thread(b);
+        t.start();
+    }
+
+
 
 }
