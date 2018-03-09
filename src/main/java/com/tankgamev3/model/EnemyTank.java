@@ -89,7 +89,7 @@ public class EnemyTank extends Tank implements Runnable {
 
             this.direct = (int) (Math.random() * 4);
 
-            if (isLive) {
+            if (this.isLive) {
                 if (ebv.size() < 5) {
                     switch (this.direct) {
                         case 0:
@@ -116,15 +116,9 @@ public class EnemyTank extends Tank implements Runnable {
                     t.start();
                 }
             }
-
             if (!this.isLive) {
                 break;
             }
         }
     }
-
-    public void shotPlayer() {
-
-    }
-
 }

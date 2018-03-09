@@ -17,6 +17,7 @@ public class Tank{
     public int speed;
     public boolean isLive;
 
+
     public Tank(int x,int y){
         this.x = x;
         this.y = y;
