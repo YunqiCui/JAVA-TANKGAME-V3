@@ -30,6 +30,7 @@ public class Bullet implements Runnable{
         }catch (Exception e){
             e.printStackTrace();
         }
+            //Bullet Shot
             switch(direct){
                 //Bullet ShotUp
                 case 0:

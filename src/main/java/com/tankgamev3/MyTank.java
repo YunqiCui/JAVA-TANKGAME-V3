@@ -238,6 +238,7 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
     public void keyReleased(KeyEvent e) {
 
     }
+    //destroy player tank when hit by enemy bullet
     public void destroyPlayer(){
 
         for (int i = 0; i < etv.size(); i++) {
@@ -254,7 +255,7 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
 
 
     }
-
+    //Destroy enemy tank when hit by player bullet
     public void destroyEnemy(){
         //判断是否击中坦克，判断那一个坦克，击中哪一个坦克
         for (int i = 0; i < this.pt.pbv.size(); i++) {
@@ -273,7 +274,7 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
         }
 
     }
-
+    //Function about when any bullet hit any of the tank.
     public void hitTank(Bullet b, Tank tk) {
 
         switch (tk.direct) {
@@ -301,7 +302,9 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
         }
 
     }
+    //Function to be run when Player wins
     public void playerWin(){
+
             int etn = etv.size();
             for (int i = 0; i < etv.size() ; i++) {
             EnemyTank et = etv.get(i);

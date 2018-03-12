@@ -12,7 +12,7 @@ public class Bomb {
         this.x = x;
         this.y = y;
     }
-
+    //Life of Bomb 
     public void lifeDecrease(){
         if(life>0){
             life--;

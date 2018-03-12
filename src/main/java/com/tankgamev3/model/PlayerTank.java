@@ -49,7 +49,7 @@ public class PlayerTank extends Tank {
         }
     }
     public void shotEnemy(){
-
+        //Player Tank shot
         switch (this.direct){
             case 0:
                 b = new Bullet(x+10,y,0);

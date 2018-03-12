@@ -20,8 +20,9 @@ public class EnemyTank extends Tank implements Runnable {
     public void run() {
 
         while (true) {
-
+            //Enemy Tank Run
             switch (this.direct) {
+
                 case 0:
 
                     for (int i = 0; i < 30; i++) {
@@ -88,7 +89,7 @@ public class EnemyTank extends Tank implements Runnable {
             }
 
             this.direct = (int) (Math.random() * 4);
-
+            //Ememy Tank Generate Bullet
             if (this.isLive) {
                 if (ebv.size() < 5) {
                     switch (this.direct) {
