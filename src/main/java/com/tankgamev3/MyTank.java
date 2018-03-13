@@ -54,9 +54,9 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
 
         //Define 3 images, combine them to make a bomb.
         try {
-            im1 = ImageIO.read(new File("src/main/java/com/tankgamev3/images/bomb_1.gif"));
-            im2 = ImageIO.read(new File("src/main/java/com/tankgamev3/images/bomb_2.gif"));
-            im3 = ImageIO.read(new File("src/main/java/com/tankgamev3/images/bomb_3.gif"));
+            im1 = ImageIO.read(new File("src/main/resources/bomb_1.gif"));
+            im2 = ImageIO.read(new File("src/main/resources/bomb_2.gif"));
+            im3 = ImageIO.read(new File("src/main/resources/bomb_3.gif"));
         }catch(Exception e){
             e.printStackTrace();
         }
