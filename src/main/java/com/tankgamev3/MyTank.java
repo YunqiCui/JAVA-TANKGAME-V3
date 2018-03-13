@@ -50,9 +50,9 @@ public class MyTank extends JPanel implements KeyListener, Runnable {
         y = pt.getY();
 
         //Define 3 images, combine them to make a bomb.
-        im1 = Toolkit.getDefaultToolkit().getImage("/Users/cuiyunqi/Desktop/HSP/TANKGAMEV3/src/main/java/com/tankgamev3/images/bomb_1.gif");
-        im2 = Toolkit.getDefaultToolkit().getImage("/Users/cuiyunqi/Desktop/HSP/TANKGAMEV3/src/main/java/com/tankgamev3/images/bomb_2.gif");
-        im3 = Toolkit.getDefaultToolkit().getImage("/Users/cuiyunqi/Desktop/HSP/TANKGAMEV3/src/main/java/com/tankgamev3/images/bomb_3.gif");
+        im1 = Toolkit.getDefaultToolkit().getImage("src/main/java/com/tankgamev3/images/bomb_1.gif");
+        im2 = Toolkit.getDefaultToolkit().getImage("src/main/java/com/tankgamev3/images/bomb_2.gif");
+        im3 = Toolkit.getDefaultToolkit().getImage("src/main/java/com/tankgamev3/images/bomb_3.gif");
     }
 
     public void paint(Graphics g) {
