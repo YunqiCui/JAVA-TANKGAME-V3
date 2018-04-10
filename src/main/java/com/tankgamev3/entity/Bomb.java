@@ -3,7 +3,6 @@ package com.tankgamev3.entity;
 public class Bomb {
 
     public int x,y;
-
     //
     public int life = 9;
     public boolean isAlive = true;
